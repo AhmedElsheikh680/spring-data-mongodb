@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 
 @Validated
 @RestController
@@ -24,6 +25,10 @@ public class AuthorController {
         return ResponseEntity.ok(authorService.findById(id));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> findAuthorByEmail(@PathVariable @Email String email) {
+        return ResponseEntity.ok(authorService.findAuthorByEmail(email));
+    }
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(authorService.findAll());
@@ -37,6 +42,14 @@ public class AuthorController {
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody @Valid Author author) {
         return ResponseEntity.ok(authorService.update(author));
+    }
+
+    @PutMapping("/custom")
+    public ResponseEntity<?> updateEmail(@RequestParam @Email String email,
+                                         @RequestParam String name, @RequestParam String phone) {
+        authorService.updateEmail(email, name, phone);
+        return ResponseEntity.ok(null);
+
     }
 
     @DeleteMapping("/{id}")

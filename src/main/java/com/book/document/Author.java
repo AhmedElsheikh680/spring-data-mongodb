@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
@@ -21,6 +22,7 @@ public class Author extends BaseDocument<String> {
     private String name;
 
     @Email
+    @Indexed(unique = true)
     private String email;
 
     private String phone;
